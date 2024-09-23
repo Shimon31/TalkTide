@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "354103989253",
+    "project_id": "talktide-9b9a0",
+    "storage_bucket": "talktide-9b9a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354103989253:android:01f082466cda56cc0ab86c",
+        "android_client_info": {
+          "package_name": "com.iaa2402.talktide"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvSfRH_dwkovmZ1LMIzDS1n16Wo-90iuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
