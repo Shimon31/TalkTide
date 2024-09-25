@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.iaa2402.talktide.databinding.FragmentLoginBinding
 
 
@@ -16,12 +17,20 @@ class LoginFragment : Fragment() {
 
     lateinit var binding: FragmentLoginBinding
 
+    lateinit var firebaseUSer : FirebaseUser
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+
+        FirebaseAuth.getInstance().currentUser?.let {
+
+            firebaseUSer = it
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        }
 
         binding.loginBtn.setOnClickListener {
             val email = binding.emailET.text.toString().trim()
@@ -38,6 +47,10 @@ class LoginFragment : Fragment() {
         }
 
 
+        binding.createAccountTV.setOnClickListener {
+
+            findNavController().navigate(R.id.action_loginFragment_to_signInFragment)
+        }
 
 
 

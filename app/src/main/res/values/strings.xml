@@ -2,4 +2,5 @@
     <string name="app_name">TalkTide</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_me">Shimon, your ability to bring fresh perspectives to every discussion is truly remarkable.</string>
 </resources>
