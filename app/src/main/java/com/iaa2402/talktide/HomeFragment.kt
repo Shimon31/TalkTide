@@ -12,7 +12,7 @@ import com.iaa2402.talktide.databinding.FragmentHomeBinding
 import com.iaa2402.talktide.databinding.FragmentSignInBinding
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), UserAdapter.ItemClick {
 
     lateinit var binding: FragmentHomeBinding
 
@@ -20,9 +20,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-        binding.logoutBtn.setOnClickListener{
+        binding.logoutBtn.setOnClickListener {
 
             val auth = FirebaseAuth.getInstance()
 
@@ -40,6 +40,14 @@ class HomeFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onItemClick(user: User) {
+
+        var bundle = Bundle()
+        bundle.putString("id", user.userId)
+        findNavController().navigate(R.id.action_homeFragment_to_profileFragment, bundle)
+
     }
 
 
