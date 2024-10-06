@@ -9,19 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.iaa2402.talktide.databinding.FragmentSignInBinding
 
 
 class SignInFragment : Fragment() {
 
     lateinit var binding: FragmentSignInBinding
-
+    lateinit var userDB : DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
-
+        userDB = FirebaseDatabase.getInstance().reference
 
 
         binding.signInBtn.setOnClickListener {
@@ -52,15 +54,40 @@ class SignInFragment : Fragment() {
 
 
             if (task.isSuccessful) {
+                saveUserToDatabase(auth.currentUser?.uid,email,user)
 
-                Toast.makeText(requireActivity(), "Create Account Successfully", Toast.LENGTH_SHORT)
-                    .show()
-                findNavController().navigate(R.id.action_signInFragment_to_loginFragment)
 
             } else {
 
                 Toast.makeText(requireActivity(), "${task.exception?.message}", Toast.LENGTH_SHORT)
                     .show()
+
+            }
+
+
+        }
+
+
+    }
+
+    private fun saveUserToDatabase(uid: String?, email: String, user: String) {
+
+        uid?.let {
+
+            val user = User(userId = uid,email= email,fullName = user)
+
+            userDB.child(DBNODES.USER).child(it).setValue(user).addOnCompleteListener { task ->
+
+                if (task.isSuccessful) {
+
+                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+
+                } else {
+
+                    Toast.makeText(requireContext(), "${task.exception?.message}", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
 
             }
 
