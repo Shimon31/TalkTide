@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -37,10 +38,6 @@ class HomeFragment : Fragment(), UserAdapter.ItemClick {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         userDB = FirebaseDatabase.getInstance().reference
-
-
-
-
 
         FirebaseAuth.getInstance().currentUser?.let {
             firebaseUser = it
@@ -95,7 +92,7 @@ class HomeFragment : Fragment(), UserAdapter.ItemClick {
                     } else {
                         currentUser = user
 
-//                        setProfile()
+                        binding.profile.load(user.profilePicture)
 
                     }
 

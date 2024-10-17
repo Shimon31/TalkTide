@@ -1,11 +1,14 @@
 package com.iaa2402.talktide
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import coil.load
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -18,9 +21,7 @@ import com.iaa2402.talktide.databinding.FragmentProfileBinding
 class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
-
     lateinit var userDB : DatabaseReference
-
     private var userId = ""
 
     private var bundle = Bundle()
@@ -30,10 +31,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
-
         userDB = FirebaseDatabase.getInstance().reference
-
-
 
 
 
@@ -47,26 +45,17 @@ class ProfileFragment : Fragment() {
         FirebaseAuth.getInstance().currentUser?.let {
 
             if (it.uid == userId){
-
                 binding.letsChatBtn.text = EDIT
-
             }else{
                 binding.letsChatBtn.text = CHAT
             }
-
         }
-
         binding.letsChatBtn.setOnClickListener {
-
             if (binding.letsChatBtn.text == EDIT){
                 bundle.putString(USERID,userId)
                 findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment,bundle)
-
             }
-
         }
-
-
 
         return binding.root
     }
@@ -78,6 +67,7 @@ class ProfileFragment : Fragment() {
         private var CHAT = "Lets Chat"
         private var USERID = "id"
 
+
     }
 
     private fun getUSerById(userId: String) {
@@ -88,10 +78,10 @@ class ProfileFragment : Fragment() {
                     snapshot.getValue(User ::class.java)?.let {
 
                         binding.apply {
-
                             fullName.text = it.fullName
                             bioTV.text = it.bio
                             emailTV.text = it.email
+                            Glide.with(requireContext()).load(it.profilePicture).placeholder(R.drawable.placeholder).into(profileIV)
                         }
 
                     }

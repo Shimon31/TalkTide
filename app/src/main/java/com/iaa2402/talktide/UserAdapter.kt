@@ -1,14 +1,18 @@
 package com.iaa2402.talktide
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.bumptech.glide.Glide
 import com.iaa2402.talktide.databinding.UserItemBinding
 
 class UserAdapter(var itemClick: ItemClick) : ListAdapter<User, UserViewHolder>(comparator) {
 
+private lateinit var context: Context
 
     interface ItemClick{
 
@@ -18,6 +22,7 @@ class UserAdapter(var itemClick: ItemClick) : ListAdapter<User, UserViewHolder>(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+       context = parent.context
         return UserViewHolder(
             UserItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -36,6 +41,7 @@ class UserAdapter(var itemClick: ItemClick) : ListAdapter<User, UserViewHolder>(
                 profileName.text = it.fullName
                 gmailName.text = it.email
                 bioTv.text = it.bio
+                Glide.with(context).load(it.profilePicture).placeholder(R.drawable.placeholder).into(profileIV)
 
 
             }

@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.messaging)
+    implementation(libs.play.services.cast.framework)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,4 +71,19 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    implementation("io.coil-kt:coil:2.4.0")
+
+//for permission
+    implementation("com.karumi:dexter:6.2.3")
+//image picker
+    implementation(libs.imagepicker)
+
+
+    implementation("androidx.activity:activity-ktx:1.2.3")
+    implementation ("androidx.fragment:fragment-ktx:1.3.3")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+
 }
