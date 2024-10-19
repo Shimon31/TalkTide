@@ -51,7 +51,7 @@
             app:layout_constraintTop_toTopOf="@id/profileImage" />
 
         <TextView
-            android:id="@+id/gmailName"
+            android:id="@+id/emailName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

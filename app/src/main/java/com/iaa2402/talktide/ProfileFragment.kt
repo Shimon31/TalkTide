@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.graphics.findFirstRoot
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.bumptech.glide.Glide
@@ -51,9 +52,12 @@ class ProfileFragment : Fragment() {
             }
         }
         binding.letsChatBtn.setOnClickListener {
+            bundle.putString(USERID,userId)
             if (binding.letsChatBtn.text == EDIT){
-                bundle.putString(USERID,userId)
+
                 findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment,bundle)
+            }else{
+                findNavController().navigate(R.id.action_profileFragment_to_chatFragment,bundle)
             }
         }
 
