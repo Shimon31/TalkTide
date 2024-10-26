@@ -11,9 +11,9 @@ interface Message {
 
 data class TextMessage(
     val text :String? = null,
-    override var msgId: String,
-    override val senderId: String,
-    override val receiverId: String
+    override var msgId: String = "",
+    override val senderId: String = "",
+    override val receiverId: String = ""
 ) : Message
 
 data class MessagesWithImage(

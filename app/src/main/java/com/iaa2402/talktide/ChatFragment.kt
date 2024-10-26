@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -25,14 +26,24 @@ class ChatFragment : Fragment() {
     lateinit var userIdSelf: String
     lateinit var userIdRemote: String
 
-
     val chatList = mutableListOf<TextMessage>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
+
+
         binding = FragmentChatBinding.inflate(layoutInflater, container, false)
         chatDb = FirebaseDatabase.getInstance().reference
+
+
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.stackFromEnd = true
+
+        binding.messageRCV.layoutManager = layoutManager
+
 
         requireArguments().getString(USERID)?.let {
             userIdRemote = it
@@ -61,7 +72,7 @@ class ChatFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+
                 }
 
 
@@ -73,45 +84,32 @@ class ChatFragment : Fragment() {
     }
 
     private fun messageToShow() {
-
-
         chatDb.child(DBNODES.CHAT).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 chatList.clear()
-
 
                 snapshot.children.forEach { snp ->
                     snp.getValue(TextMessage::class.java)?.let {
-
-                        if (it.senderId == userIdSelf && it.receiverId == userIdRemote
-                            || it.senderId == userIdRemote && it.receiverId == userIdSelf
-
-
-                        ) {
+                        if ((it.senderId == userIdSelf && it.receiverId == userIdRemote) ||
+                            (it.senderId == userIdRemote && it.receiverId == userIdSelf)) {
                             chatList.add(it)
-
                         }
-
-
                     }
-
-
                 }
 
-                var adapter = ChatAdapter(userIdSelf)
-                adapter.submitList(chatList)
-                binding.messageRCV.adapter =adapter
+                // Create a new adapter with the updated chat list
+                val adapter = ChatAdapter(userIdSelf,chatList)
 
 
+                binding.messageRCV.adapter = adapter
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                // Handle the error (log it or show a Toast)
             }
-
         })
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -152,7 +150,7 @@ class ChatFragment : Fragment() {
             }
 
         }
-
+ 
     }
 
 
