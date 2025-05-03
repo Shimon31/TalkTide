@@ -91,13 +91,6 @@ class ProfileEditFragment : Fragment() {
 
         }
 
-//        else {
-//            Toast.makeText(
-//                requireContext(),
-//                "${task.exception?.message}",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
 
 
         binding.profileIV.setOnClickListener {
